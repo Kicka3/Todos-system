@@ -24,7 +24,7 @@ const TodoListCard: FC<TodoListCardPropsType> = ({
                                                      changeFilter
                                                  }) => {
 
-    // Что это такое?
+
     const listItems: Array<JSX.Element> | JSX.Element = tasks.map(el => {
 
         const onClickRemoveTaskHandler = () => {
