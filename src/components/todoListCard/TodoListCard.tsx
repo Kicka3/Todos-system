@@ -25,10 +25,6 @@ const TodoListCard: FC<TodoListCardPropsType> = ({
                                                  }) => {
     const listItems: Array<JSX.Element> | JSX.Element = tasks.map(el => {
 
-        const AddNewBranch = () => {
-            console.log(typeof(el))
-        }
-
         const onClickRemoveTaskHandler = () => {
             console.log(el.id)
             removeTask(el.id)
