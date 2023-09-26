@@ -1,0 +1,143 @@
+.App {
+    padding: 30px;
+    display: flex;
+}
+
+.App > div {
+    margin-right: 50px;
+}
+
+
+.CardWrapper {
+    background: #1A1A40;
+    margin-top: 10px;
+    padding: 32px;
+    border-radius: 8px;
+
+    /*min-height: 416px;*/
+    max-width: 416px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.CardTitle {
+    color: #fff;
+    margin-bottom: 8px;
+    font-size: 28px;
+}
+
+.TodoForm {
+    width: 100%;
+}
+
+.TodoInput {
+    outline: none;
+    background: none;
+    border: 1px solid #8758ff;
+    padding: 7px 16px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+    min-width: 300px;
+    color: #fff;
+}
+
+.TodoInput:hover {
+    border-color: #7338fb;
+}
+
+.TodoInput::placeholder {
+    color: #ffffff4d;
+}
+
+.TodoAddBtn {
+    background: #8758ff;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.TodoAddBtn:hover {
+    background: #7338fb;
+}
+
+.TodoListsWrapper {
+    width: 100%;
+}
+
+.TodoListWrapperLi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #8758ff;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 5px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    flex-direction: row-reverse;
+}
+
+.TodoListWrapperLi:hover {
+    background: #7338fb;
+}
+
+.FilterBtnWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.FilterBtn {
+    appearance: none;
+    border: 0;
+    border-radius: 5px;
+    background: #4650d7;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 12px;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.FilterBtn:hover {
+    background: #1d49aa;
+}
+
+.FilterBtn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(203, 214, 238, 0.71);
+}
+
+.EmptyTasksList {
+    font-size: 20px;
+    color: #fff;
+    position: relative;
+    left: 40px;
+    bottom: 16px;
+}
+
+.RemoveBtn {
+    text-decoration: none;
+    background-color: transparent;
+
+}
+
+/*.FilterBtn[disabled] {*/
+/*  color: #d2d5db;*/
+/*  background: #6c7589;*/
+/*  cursor: not-allowed;*/
+/*}*/
+
+/*.Completed {*/
+/*  color: #c5aeff;*/
+/*  text-decoration: line-through;*/
+/*}*/
