@@ -1,35 +1,51 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, FC, useState} from 'react';
 import {FilteredValueType} from "../../App";
 
 
 export type TasksType = {
     id: string,
-    titleTask: string,
+    title: string,
     isDone: boolean,
 
 }
 
 type TodoListCardPropsType = {
     title: string,
-    tasks: Array<TasksType>,
-    removeTask: (taskId: string) => void,
-    changeFilter: (nextFilterValue: FilteredValueType) => void,
+    tasks: Array<TasksType>
+    todoID: string
+    removeTask: (todolistID: string, taskId: string) => void,
+    addTask: (todolistID: string, title: string) => void
+    changeFilter: (todolistID: string, nextFilterValue: FilteredValueType) => void,
+    changeTaskStatus: (todolistID: string, taskID: string, isDone: boolean) => void
+    removeTodolist: (todolistID: string) => void
 }
 
 
-const TodoListCard: FC<TodoListCardPropsType> = ({
-                                                     title,
-                                                     tasks,
-                                                     removeTask,
-                                                     changeFilter
-                                                 }) => {
+const TodoListCard: FC<TodoListCardPropsType> = (props) => {
+    const {
+        title,
+        tasks,
+        removeTask,
+        addTask,
+        changeFilter,
+        todoID,
+        changeTaskStatus,
+        removeTodolist,
+        ...setProps
+    } = props
+
+    const [taskTitle, setTaskTitle] = useState('');
+    const [error, setError] = useState<string | null>(null);
 
 
     const listItems: Array<JSX.Element> | JSX.Element = tasks.map(el => {
-
         const onClickRemoveTaskHandler = () => {
-            console.log(el.id)
-            removeTask(el.id)
+            removeTask(todoID, el.id)
+        }
+
+        const TaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            console.log('МЕНЯЙ!')
+            changeTaskStatus(todoID, el.id, e.currentTarget.checked)
         }
 
         return (
@@ -37,8 +53,9 @@ const TodoListCard: FC<TodoListCardPropsType> = ({
                 key={el.id}>
                 <input className={"TodoTask"}
                        type="checkbox"
-                       checked={el.isDone}/>
-                <span>{el.titleTask}</span>
+                       checked={el.isDone}
+                       onChange={TaskStatusHandler}/>
+                <span>{el.title}</span>
                 <button className={"RemoveBtn"}
                         onClick={onClickRemoveTaskHandler}>✖️
                 </button>
@@ -50,14 +67,68 @@ const TodoListCard: FC<TodoListCardPropsType> = ({
         ? <ul>{listItems}</ul>
         : <span className={"EmptyTasksList"}>Your tasks lists is empty</span>
 
+
+    const addTaskHandler = () => {
+        if (taskTitle.trim() !== '') {
+            addTask(todoID, taskTitle);
+            setTaskTitle('');
+        } else {
+            setError('Title is required');
+        }
+    }
+
+    const onChangeInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(e.currentTarget.value);
+        setError('');
+        console.log(e.currentTarget.value);
+    }
+
+    const changeAllFilterHandler = () => {
+        changeFilter(props.todoID, 'all');
+    }
+    const changeActiveFilterHandler = () => {
+        changeFilter(props.todoID, 'active');
+    }
+    const changeComplitedFilterHandler = () => {
+        changeFilter(props.todoID, 'completed');
+    }
+
+    const keyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        setError(null);
+        if (e.charCode === 13) {
+            addTaskHandler()
+        }
+    }
+
+    const RemoveTodolistHandler = () => {
+        props.removeTodolist(todoID)
+    }
+
     return (
         <div className={"CardWrapper"}>
-            <h3 className={"CardTitle"}>{title}</h3>
-
+            <div className="todolistTitleWrapper">
+                <h3 className={"CardTitle"}>{title}</h3>
+                <button className={"RemoveBtn"}
+                        onClick={RemoveTodolistHandler}>✖️
+                </button>
+            </div>
             <div>
                 <div className={"TodoForm"}>
-                    <input className={"TodoInput"} placeholder={"What is the task today?"}/>
-                    <button className={"TodoAddBtn"}>+</button>
+                    <div className="inputWrapper">
+                        <input className={error ? "TodoInputError" : "TodoInput"}
+                               value={taskTitle}
+                               placeholder={"What is the task today?"}
+                               onChange={onChangeInputHandler}
+                               onKeyPress={keyPressHandler}
+                        />
+                        <button className={"TodoAddBtn"}
+                                onClick={addTaskHandler}
+                                disabled={!!error}
+                        >+
+                        </button>
+                        {error && <div className={'error-message'}>{error}</div>}
+                    </div>
+
                 </div>
 
                 <div className={"TodoListsWrapper"}>
@@ -68,9 +139,9 @@ const TodoListCard: FC<TodoListCardPropsType> = ({
             </div>
 
             <div className={"FilterBtnWrapper"}>
-                <button className={"FilterBtn"} onClick={() => changeFilter('all')}>All</button>
-                <button className={"FilterBtn"} onClick={() => changeFilter('active')}>Active</button>
-                <button className={"FilterBtn"} onClick={() => changeFilter('completed')}>Completed</button>
+                <button className={"FilterBtn"} onClick={changeAllFilterHandler}>All</button>
+                <button className={"FilterBtn"} onClick={changeActiveFilterHandler}>Active</button>
+                <button className={"FilterBtn"} onClick={changeComplitedFilterHandler}>Completed</button>
             </div>
 
         </div>
