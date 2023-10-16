@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import {FilteredValueType} from "../../App";
+import {AddItemForm} from "../addItemForm/AddItemForm";
 
 
 export type TasksType = {
@@ -10,14 +11,16 @@ export type TasksType = {
 }
 
 type TodoListCardPropsType = {
-    title: string,
+    title: string
     tasks: Array<TasksType>
     todoID: string
-    removeTask: (todolistID: string, taskId: string) => void,
+    removeTask: (todolistID: string, taskId: string) => void
     addTask: (todolistID: string, title: string) => void
-    changeFilter: (todolistID: string, nextFilterValue: FilteredValueType) => void,
+    changeFilter: (todolistID: string, nextFilterValue: FilteredValueType) => void
     changeTaskStatus: (todolistID: string, taskID: string, isDone: boolean) => void
     removeTodolist: (todolistID: string) => void
+
+    addItem: (title: string) => void
 }
 
 
@@ -31,9 +34,17 @@ const TodoListCard: FC<TodoListCardPropsType> = (props) => {
         todoID,
         changeTaskStatus,
         removeTodolist,
+        addItem,
         ...setProps
     } = props
 
+
+    const addItem = (title: string) => {
+
+    }
+    const RemoveTodolistHandler = () => {
+        props.removeTodolist(todoID)
+    }
 
     const changeAllFilterHandler = () => {
         changeFilter(props.todoID, 'all');
@@ -43,13 +54,6 @@ const TodoListCard: FC<TodoListCardPropsType> = (props) => {
     }
     const changeComplitedFilterHandler = () => {
         changeFilter(props.todoID, 'completed');
-    }
-
-
-
-
-    const RemoveTodolistHandler = () => {
-        props.removeTodolist(todoID)
     }
 
     return (
@@ -62,7 +66,7 @@ const TodoListCard: FC<TodoListCardPropsType> = (props) => {
                 </h3>
             </div>
             <div>
-
+                <AddItemForm/>
 
                 <div className={"TodoListsWrapper"}>
                     <ul>

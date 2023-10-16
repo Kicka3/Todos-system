@@ -66,6 +66,9 @@ function App() {
         setTasks({...tasks});
     }
 
+    const addItem = () => {
+        console.log('Кто я?!')
+    }
 
     return (
         <div className="App">
@@ -88,6 +91,7 @@ function App() {
                                   changeTaskStatus={changeTaskStatus}
                                   removeTodolist={removeTodolist}
 
+                                  addItem={addItem}
                     />
                 )
             })}
