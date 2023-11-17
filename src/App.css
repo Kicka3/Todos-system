@@ -1,6 +1,8 @@
 .App {
     padding: 30px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
 }
 
 .App > div {
@@ -9,12 +11,12 @@
 
 
 .CardWrapper {
-    background: #1A1A40;
+    background: rgba(166, 188, 250, 0.63);
     margin-top: 10px;
     padding: 32px;
     border-radius: 8px;
 
-    /*min-height: 416px;*/
+    min-height: 416px;
     max-width: 416px;
     width: 100%;
 
@@ -26,9 +28,16 @@
 }
 
 .CardTitle {
-    color: #fff;
+    /*color: #fff;*/
+    color: rgba(138, 43, 226, 0.82);
     margin-bottom: 8px;
     font-size: 28px;
+}
+
+.TitleWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
 }
 
 .TodoForm {
@@ -130,6 +139,7 @@
     box-shadow: 0 0 0 2px rgba(203, 214, 238, 0.71);
 }
 
+
 .EmptyTasksList {
     font-size: 20px;
     color: #fff;
@@ -137,7 +147,6 @@
     left: 40px;
     bottom: 16px;
 }
-
 .RemoveBtn {
     text-decoration: none;
     background-color: #8758ff;
@@ -163,9 +172,10 @@
 /*    background-color: aquamarine;*/
 /*}*/
 
-.is-done {
+.IsDone {
     opacity: 0.5;
     text-decoration: line-through;
+    color: #c5aeff;
 }
 
 /*.FilterBtn[disabled] {*/
