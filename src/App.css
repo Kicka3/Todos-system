@@ -1,6 +1,8 @@
 .App {
     padding: 30px;
     display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
 }
 
 .App > div {
@@ -9,12 +11,12 @@
 
 
 .CardWrapper {
-    background: #1A1A40;
+    background: rgba(166, 188, 250, 0.63);
     margin-top: 10px;
     padding: 32px;
     border-radius: 8px;
 
-    /*min-height: 416px;*/
+    min-height: 416px;
     max-width: 416px;
     width: 100%;
 
@@ -26,9 +28,16 @@
 }
 
 .CardTitle {
-    color: #fff;
+    /*color: #fff;*/
+    color: rgba(138, 43, 226, 0.82);
     margin-bottom: 8px;
     font-size: 28px;
+}
+
+.TitleWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
 }
 
 .TodoForm {
@@ -41,7 +50,16 @@
     border: 1px solid #8758ff;
     padding: 7px 16px;
     margin-top: 16px;
-    margin-bottom: 32px;
+    min-width: 300px;
+    color: #fff;
+}
+
+.TodoInputError {
+    outline: none;
+    background: none;
+    border: 1px solid #ff0000;
+    padding: 7px 16px;
+    margin-top: 16px;
     min-width: 300px;
     color: #fff;
 }
@@ -52,6 +70,10 @@
 
 .TodoInput::placeholder {
     color: #ffffff4d;
+}
+
+.inputWrapper {
+    margin-bottom: 32px;
 }
 
 .TodoAddBtn {
@@ -117,6 +139,7 @@
     box-shadow: 0 0 0 2px rgba(203, 214, 238, 0.71);
 }
 
+
 .EmptyTasksList {
     font-size: 20px;
     color: #fff;
@@ -124,11 +147,35 @@
     left: 40px;
     bottom: 16px;
 }
-
 .RemoveBtn {
     text-decoration: none;
-    background-color: transparent;
+    background-color: #8758ff;
+}
 
+.todolistTitleWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.error {
+    border: red 1px solid;
+}
+
+.error-message {
+    color: red;
+}
+
+/*.active-filter {*/
+/*    background-color: aquamarine;*/
+/*}*/
+
+.IsDone {
+    opacity: 0.5;
+    text-decoration: line-through;
+    color: #c5aeff;
 }
 
 /*.FilterBtn[disabled] {*/
