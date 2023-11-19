@@ -6,13 +6,13 @@ import {AddItemForm} from "./components/addItemForm/AddItemForm";
 
 export type FilterValuesType = "all" | "active" | "completed"
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -69,16 +69,17 @@ function App() {
         });
     };
 
-    const removeTodolist = (todolistId: string) => {
-        setTodolists(todolists.filter(el => el.id !== todolistId));
-        delete tasks[todolistId]
-    };
-
     const changeTaskTitle = (todolistId: string, taskID: string, newTaskTitle: string) => {
         setTasks({
             ...tasks,
             [todolistId]: tasks[todolistId].map(el => el.id === taskID ? {...el, title: newTaskTitle} : el)
         });
+    };
+
+
+    const removeTodolist = (todolistId: string) => {
+        setTodolists(todolists.filter(el => el.id !== todolistId));
+        delete tasks[todolistId]
     };
 
     const changeTodolistTitle = (todolistId: string, newTodolistTitle: string) => {

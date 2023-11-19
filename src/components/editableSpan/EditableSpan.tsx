@@ -10,6 +10,7 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [newTitle, setNewTitle] = useState<string>(value);
+    const [error, setError] = useState('');
 
     const dbClickHandler = () => {
         setEditMode(true);
@@ -17,17 +18,25 @@ export const EditableSpan: React.FC<EditableSpanPropsType> = (props) => {
     };
 
     const activateViewMode = () => {
+        if (newTitle.trim() !== '') {
         setEditMode(false);
         onChangeTaskTitle(newTitle)
+        } else {
+            setError('Title is required')
+        }
     };
 
     const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let inputValue = e.currentTarget.value;
-        setNewTitle(inputValue);
+            setNewTitle(inputValue.trim());
     };
 
     return editMode
-        ? <input value={newTitle} onBlur={activateViewMode} onChange={changeTitleHandler} autoFocus/>
+        ? <input className={error ? 'error' : ''}
+                 value={newTitle}
+                 onBlur={activateViewMode}
+                 onChange={changeTitleHandler}
+                 autoFocus/>
         : <span onDoubleClick={dbClickHandler}>{value}</span>
 };
 
