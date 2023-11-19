@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterValuesType} from "../../App";
 import {AddItemForm} from "../addItemForm/AddItemForm";
+import {EditableSpan} from "../editableSpan/EditableSpan";
 
 export type TaskType = {
     id: string
@@ -17,6 +18,8 @@ type TodolistPropsType = {
     changeTaskFilter: (filterValue: FilterValuesType, todolistID: string) => void
     changeTaskStatus: (todolistId: string, taskID: string, newTaskStatus: boolean) => void
     removeTodolist: (todolistId: string) => void
+    changeTaskTitle: (todolistId: string, taskID: string, newTaskTitle: string) => void
+    changeTodolistTitle: (todolistId: string, newTodolistTitle: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
@@ -29,6 +32,8 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         changeTaskStatus,
         id,
         removeTodolist,
+        changeTaskTitle,
+        changeTodolistTitle,
     } = props;
 
     const mapedTodolists = tasks.map(el => {
@@ -39,13 +44,20 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         const changeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             let newTaskStatus = e.currentTarget.checked;
             changeTaskStatus(id, el.id, newTaskStatus);
-        }
+        };
+
+        const onChangeTaskTitle = (newTaskTitle: string) => {
+            changeTaskTitle(id, el.id, newTaskTitle)
+        };
 
         return (
             <li key={el.id}
                 className={el.isDone ? 'IsDone' : ''}>
                 <button onClick={removeTaskHandler}>X</button>
-                <span>{el.title}</span>
+                <EditableSpan
+                    value={el.title}
+                    onChangeTaskTitle={onChangeTaskTitle}
+                />
                 <input type="checkbox"
                        checked={el.isDone}
                        onChange={changeStatusHandler}
@@ -74,10 +86,15 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         addTask(id, titleInput);
     };
 
+    const onChangeTodolistTitle = (newTitle: string) => {
+        changeTodolistTitle(id, newTitle)
+    }
+
     return (
         <div>
             <div className={'TitleWrapper'}>
-                <h3>{title}</h3>
+                {/*<h3>{title}</h3>*/}
+                <EditableSpan value={title} onChangeTaskTitle={onChangeTodolistTitle}/>
                 <button onClick={removeTodoHandler}>X</button>
             </div>
             <AddItemForm addItem={addTaskFromAddItemFrom}/>
