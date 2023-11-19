@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
-import {FilterValuesType} from "../App";
+import {FilterValuesType} from "../../App";
+import {AddItemForm} from "../addItemForm/AddItemForm";
 
 export type TaskType = {
     id: string
@@ -30,9 +31,6 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         removeTodolist,
     } = props;
 
-    const [titleInput, setTitleInput] = useState<string>('');
-    const [error, setError] = useState<string | null>(null)
-
     const mapedTodolists = tasks.map(el => {
         const removeTaskHandler = () => {
             removeTask(id, el.id);
@@ -53,45 +51,28 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
                        onChange={changeStatusHandler}
                 />
             </li>
-        )
-    })
-
-    const addTaskHandler = () => {
-        if (titleInput.trim() !== '') {
-            addTask(id, titleInput.trim());
-            setTitleInput('');
-        } else {
-            setError('Title is required')
-        }
-    };
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        let newTitle = e.currentTarget.value;
-        setTitleInput(newTitle);
-        setError('')
-    };
-
-    const pressEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addTaskHandler()
-        }
-    }
+        );
+    });
 
     const allFilterHandler = () => {
-        changeTaskFilter('all', id)
+        changeTaskFilter('all', id);
     };
 
     const activeFilterHandler = () => {
-        changeTaskFilter('active', id)
+        changeTaskFilter('active', id);
     };
 
     const completedFilterHandler = () => {
-        changeTaskFilter('completed', id)
-    }
+        changeTaskFilter('completed', id);
+    };
 
     const removeTodoHandler = () => {
-        removeTodolist(id)
-    }
+        removeTodolist(id);
+    };
+
+    const addTaskFromAddItemFrom = (titleInput: string) => {
+        addTask(id, titleInput);
+    };
 
     return (
         <div>
@@ -99,18 +80,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
                 <h3>{title}</h3>
                 <button onClick={removeTodoHandler}>X</button>
             </div>
-            <div>
-                <input type="text"
-                       value={titleInput}
-                       onChange={onChangeHandler}
-                       onKeyPress={pressEnterHandler}
-                       className={error ? 'error' : ''}
-                />
-                <button onClick={addTaskHandler}
-                >+
-                </button>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>
+            <AddItemForm addItem={addTaskFromAddItemFrom}/>
             <ul>
                 {mapedTodolists}
             </ul>

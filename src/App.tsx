@@ -1,7 +1,8 @@
 import './App.css';
-import {TaskType, Todolist} from "./components/Todolist";
+import {TaskType, Todolist} from "./components/todolist/Todolist";
 import {useState} from "react";
 import {v1} from "uuid";
+import {AddItemForm} from "./components/addItemForm/AddItemForm";
 
 export type FilterValuesType = "all" | "active" | "completed"
 
@@ -48,8 +49,7 @@ function App() {
             totolist.filter = filterValue
             setTodolists([...todolists])
         }
-
-    }
+    };
 
     const removeTask = (todolistId: string, taskID: string) => {
         setTasks(
@@ -96,8 +96,16 @@ function App() {
         />
     });
 
+    const addTodolist = (titleInput: string) => {
+        let newTodolistID = todolistID1;
+        let newTodolist: TodolistType = {id: newTodolistID, title: titleInput, filter: 'all'}
+        setTodolists([newTodolist, ...todolists]);
+        setTasks({...tasks, [newTodolistID]: []})
+    };
+
     return (
         <div className={"App"}>
+            <AddItemForm addItem={addTodolist}/>
             {mapedTodolists}
         </div>
     );
