@@ -8,7 +8,8 @@ type MainTypeTodolistReducer =
     | ChangeTodolistFilterACType
     | AddTodolistACType
 
-export const todolistsReducer = (state: TodolistType[], action: MainTypeTodolistReducer): TodolistType[] => {
+let initialState: TodolistType[] = [];
+export const todolistsReducer = (state: TodolistType[] = initialState, action: MainTypeTodolistReducer): TodolistType[] => {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
             return state.filter(el => el.id !== action.payload.todolistID)
@@ -26,7 +27,11 @@ export const todolistsReducer = (state: TodolistType[], action: MainTypeTodolist
             } : el)
         }
         case "ADD-TODOLIST": {
-            let newTodolist: TodolistType = {id: action.payload.todolistID, title: action.payload.titleInput, filter: 'all'};
+            let newTodolist: TodolistType = {
+                id: action.payload.todolistID,
+                title: action.payload.titleInput,
+                filter: 'all'
+            };
             return [newTodolist, ...state]
         }
         default:

@@ -9,7 +9,10 @@ type MainTypeTaskReducer =
     | changeTaskStatusACType
     | changeTaskTitleACType
     | AddTodolistACType
-export const tasksReducer = (state: TasksStateType, action: MainTypeTaskReducer): TasksStateType => {
+
+
+let initialState: TasksStateType = {};
+export const tasksReducer = (state: TasksStateType = initialState, action: MainTypeTaskReducer): TasksStateType => {
     switch (action.type) {
         case "ADD-TASK": {
             let newTask = {id: v1(), title: action.payload.titleInput, isDone: false}
