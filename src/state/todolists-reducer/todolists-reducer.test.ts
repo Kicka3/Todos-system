@@ -3,14 +3,20 @@ import {v1} from 'uuid'
 import {FilterValuesType, TodolistType} from "../../App";
 
 
-test('correct todolist should be removed', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
+let todolistId1 : string;
+let todolistId2: string;
+let startState: TodolistType[];
+beforeEach(() => {
+    todolistId1 = v1();
+    todolistId2 = v1();
 
-    const startState: Array<TodolistType> = [
+    startState = [
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
+});
+
+test('correct todolist should be removed', () => {
 
     const endState = todolistsReducer(startState, {type: 'REMOVE-TODOLIST', payload: {todolistID: todolistId1}})
 
@@ -19,14 +25,6 @@ test('correct todolist should be removed', () => {
 });
 
 test('todolists title should be changed', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: Array<TodolistType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'}
-    ];
-
     let newName = 'Go walk';
     const action = changeTodolistTitleAC(todolistId2, newName);
     const endState = todolistsReducer(startState, action);
@@ -36,13 +34,6 @@ test('todolists title should be changed', () => {
 });
 
 test('correct filter of todolist should be changed', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: Array<TodolistType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'}
-    ];
 
     let newFilter: FilterValuesType = "completed";
 
@@ -54,13 +45,6 @@ test('correct filter of todolist should be changed', () => {
 });
 
 test('correct todolist should be added', () => {
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    const startState: Array<TodolistType> = [
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'}
-    ];
 
     let newTodolistTitle = "New Todolist";
 
