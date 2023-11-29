@@ -110,6 +110,4 @@ function AppWithRedux() {
         </div>
     );
 }
-
-
 export default AppWithRedux;
